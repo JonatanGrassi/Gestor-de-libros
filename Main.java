@@ -19,11 +19,8 @@ public class Main {
 		int[] contador = { 0 };
 		int opcion;
 		Libro libro = new Libro(), dato = null;
-		try {
-			vector = Archivo.leerArchivoLibros();
-			users = ArchivoUsers.leerUsers();
-		} catch (FileNotFoundException e) {
-		}
+		vector = Archivo.leerArchivoLibros();
+		users = ArchivoUsers.leerUsers();
 		do {
 			validarUsuario(users);
 			opcion = ingresar_opcion(vector);
@@ -165,7 +162,7 @@ public class Main {
 
 	public static int ingresar_opcion(Vector<Libro> vector) {
 		int opcion;
-		System.out.println("MEN\u00DA");
+		System.out.println("MENU");
 		System.out.println("1.- Altas");
 		System.out.println("2.- Consultas");
 		System.out.println("3.- Actualizaciones");

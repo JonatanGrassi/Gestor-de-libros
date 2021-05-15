@@ -17,41 +17,51 @@ public class ManejadorArchivos {
 		this.ruta = nombreArch;
 	}
 
-	public Vector<Libro> leerArchivoLibros() throws FileNotFoundException {
-
-		Scanner entrada = new Scanner(new FileReader(ruta));
-		Vector<Libro> vector = new Vector<Libro>();
-		String[] campos;
-		while (entrada.hasNextLine()) {
-			campos = entrada.nextLine().split("\t");
-			Libro libro = new Libro();
-			libro.setISBN(campos[0]);
-			libro.setTitulo(campos[1]);
-			libro.setAutor(campos[2]);
-			libro.setEditorial(campos[3]);
-			libro.setEdicion(Integer.parseInt(campos[4]));
-			libro.setAnno_de_publicacion(Integer.parseInt(campos[5]));
-			vector.add(libro);
+	public Vector<Libro> leerArchivoLibros() {
+		Scanner entrada = null;
+		Vector<Libro> vector = null;
+		try {
+			entrada = new Scanner(new FileReader(ruta));
+			vector = new Vector<Libro>();
+			String[] campos;
+			while (entrada.hasNextLine()) {
+				campos = entrada.nextLine().split("\t");
+				Libro libro = new Libro();
+				libro.setISBN(campos[0]);
+				libro.setTitulo(campos[1]);
+				libro.setAutor(campos[2]);
+				libro.setEditorial(campos[3]);
+				libro.setEdicion(Integer.parseInt(campos[4]));
+				libro.setAnno_de_publicacion(Integer.parseInt(campos[5]));
+				vector.add(libro);
+			}
+		} catch (FileNotFoundException ex) {
+			ex.printStackTrace();
 		}
 		entrada.close();
 		return vector;
 	}
-	
-	public ArrayList<User> leerUsers() throws FileNotFoundException {
 
-		Scanner entrada = new Scanner(new FileReader(ruta));
-		ArrayList<User> usuarios = new ArrayList<>();
-		String[] campos;
-		while (entrada.hasNextLine()) {
-			campos = entrada.nextLine().split("\t");
-			User usuario = new User(campos[0],campos[1]);
-			usuarios.add(usuario);
+	public ArrayList<User> leerUsers() {
+		Scanner entrada = null;
+		ArrayList<User> usuarios = null; 
+		try {
+			entrada = new Scanner(new FileReader(ruta));
+			usuarios = new ArrayList<>();
+			String[] campos;
+			while (entrada.hasNextLine()) {
+				campos = entrada.nextLine().split("\t");
+				User usuario = new User(campos[0], campos[1]);
+				usuarios.add(usuario);
+			}
+		} catch (FileNotFoundException ex) {
+			ex.printStackTrace();
 		}
 		entrada.close();
 		return usuarios;
 	}
 
-	public void escribirEnArchivo(Vector<Libro> vecLibros,String ruta) {
+	public void escribirEnArchivo(Vector<Libro> vecLibros, String ruta) {
 		FileWriter fichero = null;
 		PrintWriter pw = null;
 		try {
@@ -65,7 +75,7 @@ public class ManejadorArchivos {
 				pw.print(vecLibros.get(i).getEdicion() + "\t");
 				pw.print(vecLibros.get(i).getAnno_de_publicacion() + "\n");
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
