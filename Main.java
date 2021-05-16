@@ -21,8 +21,9 @@ public class Main {
 		Libro libro = new Libro(), dato = null;
 		vector = Archivo.leerArchivoLibros();
 		users = ArchivoUsers.leerUsers();
+		validarUsuario(users);
 		do {
-			validarUsuario(users);
+			
 			opcion = ingresar_opcion(vector);
 			if (opcion < 5) {
 				dato = validarISBN(libro, contador, vector);
