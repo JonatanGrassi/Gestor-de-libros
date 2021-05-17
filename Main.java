@@ -23,7 +23,6 @@ public class Main {
 		users = ArchivoUsers.leerUsers();
 		validarUsuario(users);
 		do {
-			Libro libro = new Libro(), dato = null;
 			opcion = ingresar_opcion(vector);
 			if (opcion < 5) {
 				dato = validarISBN(libro, contador, vector);
@@ -36,7 +35,7 @@ public class Main {
 	private static void validarUsuario(ArrayList<User> users) {
 		boolean coicidencia = false;
 		do {
-			User usuario = new User(leer_cadena("Ingrese nombre de usuario"), leer_cadena("Ingrese contraseña"));
+			User usuario = new User(leer_cadena("Ingrese nombre de usuario"), leer_cadena("Ingrese contraseï¿½a"));
 			for (User user : users)
 				if (user.equals(usuario))
 					coicidencia = true;
