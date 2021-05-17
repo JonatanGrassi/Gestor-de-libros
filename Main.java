@@ -18,12 +18,12 @@ public class Main {
 		ArrayList<User> users = new ArrayList<>();
 		int[] contador = { 0 };
 		int opcion;
-		Libro libro = new Libro(), dato = null;
+//		Libro libro = new Libro(), dato = null;
 		vector = Archivo.leerArchivoLibros();
 		users = ArchivoUsers.leerUsers();
 		validarUsuario(users);
 		do {
-			
+			Libro libro = new Libro(), dato = null;
 			opcion = ingresar_opcion(vector);
 			if (opcion < 5) {
 				dato = validarISBN(libro, contador, vector);

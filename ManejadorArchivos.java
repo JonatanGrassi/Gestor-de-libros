@@ -88,5 +88,25 @@ public class ManejadorArchivos {
 			}
 		}
 	}
+	
+	public void registrarUsuarios(String nombre, String pssw) {
+		FileWriter fichero = null;
+		PrintWriter pw = null;
+		try {
+			fichero = new FileWriter(ruta,true);
+			pw = new PrintWriter(fichero);			
+			pw.print(nombre + "\t" + pssw + "\n");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+
+				if (null != fichero)
+					fichero.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
 
 }
