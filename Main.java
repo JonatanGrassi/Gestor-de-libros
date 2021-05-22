@@ -18,11 +18,12 @@ public class Main {
 		ArrayList<User> users = new ArrayList<>();
 		int[] contador = { 0 };
 		int opcion;
-//		Libro libro = new Libro(), dato = null;
+		//Libro libro = new Libro(), dato = null;
 		vector = Archivo.leerArchivoLibros();
 		users = ArchivoUsers.leerUsers();
 		validarUsuario(users);
 		do {
+			Libro libro = new Libro(), dato = null;
 			opcion = ingresar_opcion(vector);
 			if (opcion < 5) {
 				dato = validarISBN(libro, contador, vector);
@@ -35,7 +36,7 @@ public class Main {
 	private static void validarUsuario(ArrayList<User> users) {
 		boolean coicidencia = false;
 		do {
-			User usuario = new User(leer_cadena("Ingrese nombre de usuario"), leer_cadena("Ingrese contraseï¿½a"));
+			User usuario = new User(leer_cadena("Ingrese nombre de usuario"), leer_cadena("Ingrese contraseña"));
 			for (User user : users)
 				if (user.equals(usuario))
 					coicidencia = true;
@@ -140,6 +141,8 @@ public class Main {
 
 	}
 
+	
+	
 	public static void pausar(String mensage) {
 		out.print(mensage + "\nPresione <ENTER> para continuar . . . ");
 		teclado.nextLine();

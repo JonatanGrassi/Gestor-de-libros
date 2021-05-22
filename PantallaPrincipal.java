@@ -12,6 +12,7 @@ import javax.swing.JList;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 import java.awt.event.ActionEvent;
 
 public class PantallaPrincipal extends JFrame {
@@ -20,6 +21,11 @@ public class PantallaPrincipal extends JFrame {
 	private DefaultListModel dlAcciones = new DefaultListModel();
 	private Integer indexOpcion;
 	private boolean eligioOpcion=false;
+	private static Vector<Libro> librosCreados ;
+	private static String rutaLibros = "libros.tsv";
+	int[] contador = { 0 };
+
+
 	/**
 	 * Launch the application.
 	 */
@@ -27,7 +33,10 @@ public class PantallaPrincipal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					
 					PantallaPrincipal frame = new PantallaPrincipal();
+					ManejadorArchivos archivo = new ManejadorArchivos(rutaLibros);
+					librosCreados = archivo.leerArchivoLibros();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,7 +72,13 @@ public class PantallaPrincipal extends JFrame {
 				if(eligioOpcion) {
 					switch (indexOpcion) {
 					case 0: //alta
-//						altaLibro();
+						
+						
+						PantallaAlta alta = new PantallaAlta(librosCreados,contador);
+						alta.setModal(true);;
+						alta.setVisible(true);
+						alta.setLocationRelativeTo(null);
+						
 						break;
 					case 1:
 						System.out.println("puto");
@@ -99,4 +114,7 @@ public class PantallaPrincipal extends JFrame {
 		dlAcciones.addElement("6.- Listar registros");
 		dlAcciones.addElement("7.- Salir");
 	}
+	
+
+	
 }
