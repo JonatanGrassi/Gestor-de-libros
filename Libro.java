@@ -21,11 +21,21 @@ public class Libro implements Comparable<Libro> {
 	}
 
 	@Override
+//	public String toString() {
+//		return "ISBN               : " + ISBN + "\n" + "titulo             : " + titulo + "\n" + "autor              : "
+//				+ autor + "\n" + "editorial          : " + editorial + "\n" + "edicion            : " + edicion + "\n"
+//				+ "anno de publicacion: " + anno_de_publicacion + "\n";
+//	}
+	
+//	public String toString() {
+//		return  ISBN + "	" +  titulo + "	" +autor + "	"  + editorial + "	"  + edicion + "	"
+//				+anno_de_publicacion + "\n";
+//	}
+	
 	public String toString() {
-		return "ISBN               : " + ISBN + "\n" + "titulo             : " + titulo + "\n" + "autor              : "
-				+ autor + "\n" + "editorial          : " + editorial + "\n" + "edicion            : " + edicion + "\n"
-				+ "anno de publicacion: " + anno_de_publicacion + "\n";
+		return 	String.format("%20s	%90s	%30s	%20s	%20d	%20d\n", ISBN,titulo,autor,editorial,edicion,anno_de_publicacion);
 	}
+
 
 	public String getISBN() {
 		return ISBN;
