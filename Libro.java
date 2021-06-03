@@ -81,4 +81,14 @@ public class Libro implements Comparable<Libro> {
 		int[] contador = parametros;
 		contador[0]++;
 	}
+	
+	public Libro validarISBN(int[] contador, Vector<Libro> vector, String isbn) {
+			int i;
+			Libro dato;
+			this.ISBN = isbn;
+			i = vector.indexOf(this);
+			dato = i < 0 ? null : vector.get(i);
+			return dato;
+		}
+	
 }

@@ -30,7 +30,7 @@ public class Main {
 			}
 			evaluarRegistro(libro, opcion, dato, contador, vector);
 		} while (opcion != 7);
-		Archivo.escribirEnArchivo(vector, ruta);
+		Archivo.escribirEnArchivo(vector);
 	}
 
 	private static void validarUsuario(ArrayList<User> users) {

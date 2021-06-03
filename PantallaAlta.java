@@ -5,12 +5,17 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import javafx.animation.Animation;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
+import javax.swing.JFormattedTextField;
 
 public class PantallaAlta extends JDialog {
 
@@ -20,7 +25,7 @@ public class PantallaAlta extends JDialog {
 	private JTextField autorTextField;
 	private JTextField editorialTextField;
 	private JTextField edicionTextField;
-	private JTextField publicTextField;
+	private JTextField anioPublicTextField;
 	
 	
 	Libro libro = new Libro(), dato = null;
@@ -43,7 +48,7 @@ public class PantallaAlta extends JDialog {
 		}
 		{
 			JLabel publiLabel = new JLabel("A\u00F1o de Publicacion");
-			publiLabel.setBounds(422, 182, 128, 14);
+			publiLabel.setBounds(422, 182, 94, 14);
 			contentPanel.add(publiLabel);
 		}
 		{
@@ -80,7 +85,7 @@ public class PantallaAlta extends JDialog {
 		}
 		{
 			autorTextField = new JTextField();
-			autorTextField.setBounds(446, 118, 135, 20);
+			autorTextField.setBounds(468, 118, 135, 20);
 			contentPanel.add(autorTextField);
 			autorTextField.setColumns(10);
 		}
@@ -97,10 +102,10 @@ public class PantallaAlta extends JDialog {
 			contentPanel.add(edicionTextField);
 		}
 		{
-			publicTextField = new JTextField();
-			publicTextField.setColumns(10);
-			publicTextField.setBounds(526, 179, 55, 20);
-			contentPanel.add(publicTextField);
+			anioPublicTextField = new JTextField();
+			anioPublicTextField.setColumns(10);
+			anioPublicTextField.setBounds(547, 179, 55, 20);
+			contentPanel.add(anioPublicTextField);
 		}
 		{
 			JLabel lblNewLabel_6 = new JLabel("REGISTRAR LIBRO");
@@ -118,33 +123,65 @@ public class PantallaAlta extends JDialog {
 					public void actionPerformed(ActionEvent arg0) {
 					Libro libroReg =  new Libro();
 					
+					Libro libroNew = libroReg.validarISBN(contador,librosCreados,isbnTextField.getText());
+					if( libroNew == null) {	
 					
-					if(validarISBN(libroReg,contador,librosCreados,isbnTextField.getText()) == null) {
+				
+						libroReg.setAutor(autorTextField.getText());
+						libroReg.setEditorial(editorialTextField.getText());
+						libroReg.setTitulo(tituloTextField.getText());
 						
+						if(leer_entero(anioPublicTextField.getText(),0)>0) {
+							libroReg.setAnno_de_publicacion(Integer.parseInt(anioPublicTextField.getText()));//tirar interrupcion
+							
+							if(leer_entero(edicionTextField.getText(),1)>0){
+								libroReg.setEdicion(Integer.parseInt(edicionTextField.getText()));//tirar interrupcion
+								librosCreados.add(libroReg);
+								dispose();
+							}
+							
+						}
+				
+					}else
+					{
+						JOptionPane.showMessageDialog(null,
+												"ISBN: " + libroReg.getISBN() +"\n"+
+												"Título: " + libroReg.getTitulo() +"\n"+
+												"Autor: " + libroReg.getAutor() +"\n"+
+												"Edición: " + libroReg.getEdicion() +"\n"+
+												"Editorial: " + libroReg.getEditorial() +"\n"+
+												"Año de publicación: " + libroReg.getAnno_de_publicacion()+"\n"
+								,"El libro que quiere registrar ya existe",
+								JOptionPane.ERROR_MESSAGE);	
 					}
 					
-						
-					}
-				});
+				
+					}});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-			}
 		}
 	}
 	
-	private static Libro validarISBN(Libro libro, int[] contador, Vector<Libro> vector, String isbn) {
-		int i;
-		Libro dato;
-		libro.setISBN(isbn);
-		i = vector.indexOf(libro);
-		dato = i < 0 ? null : vector.get(i);
-		return dato;
-	}
 
+	public static int leer_entero(String mensaje,int identificacor) {
+		try {
+			return Integer.parseInt(mensaje);
+		} catch (NumberFormatException e) {
+			if( identificacor == 0) {
+				JOptionPane.showMessageDialog(null,
+						"El año de publicación debe ser un número entero positivo","Error al Registar",JOptionPane.ERROR_MESSAGE);
+			}else
+			{
+				JOptionPane.showMessageDialog(null,
+						"El numero de edicion debe ser un número entero positivo","Error al Registar",JOptionPane.ERROR_MESSAGE);
+			}
+		
+			return -1;
+		}
+	}
+	
 }
+
+

@@ -20,9 +20,10 @@ public class PantallaPrincipal extends JFrame {
 	private JPanel contentPane;
 	private DefaultListModel dlAcciones = new DefaultListModel();
 	private Integer indexOpcion;
+	private static ManejadorArchivos archivo = new ManejadorArchivos("libros.tsv");
 	private boolean eligioOpcion=false;
 	private static Vector<Libro> librosCreados ;
-	private static String rutaLibros = "libros.tsv";
+	//private static String rutaLibros = "libros.tsv";
 	int[] contador = { 0 };
 
 
@@ -35,7 +36,7 @@ public class PantallaPrincipal extends JFrame {
 				try {
 					
 					PantallaPrincipal frame = new PantallaPrincipal();
-					ManejadorArchivos archivo = new ManejadorArchivos(rutaLibros);
+					
 					librosCreados = archivo.leerArchivoLibros();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -70,6 +71,8 @@ public class PantallaPrincipal extends JFrame {
 		AceptarOptButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(eligioOpcion) {
+					
+					
 					switch (indexOpcion) {
 					case 0: //alta
 						
@@ -80,8 +83,18 @@ public class PantallaPrincipal extends JFrame {
 						alta.setLocationRelativeTo(null);
 						
 						break;
-					case 1:
-						System.out.println("puto");
+					case 3:
+						
+						PantallaBaja baja = new PantallaBaja(librosCreados,contador);
+						baja.setModal(true);;
+						baja.setVisible(true);
+						baja.setLocationRelativeTo(null);
+						break;
+					case 6 :
+						archivo.escribirEnArchivo(librosCreados );
+						dispose();
+						break;
+					
 					default:
 						break;
 					}
@@ -115,6 +128,13 @@ public class PantallaPrincipal extends JFrame {
 		dlAcciones.addElement("7.- Salir");
 	}
 	
-
+	 public static Libro validarISBN(Libro libro, int[] contador, Vector<Libro> vector, String isbn) {
+			int i;
+			Libro dato;
+			libro.setISBN(isbn);
+			i = vector.indexOf(libro);
+			dato = i < 0 ? null : vector.get(i);
+			return dato;
+		}
 	
 }

@@ -61,7 +61,7 @@ public class ManejadorArchivos {
 		return usuarios;
 	}
 
-	public void escribirEnArchivo(Vector<Libro> vecLibros, String ruta) {
+	public void escribirEnArchivo(Vector<Libro> vecLibros) {
 		FileWriter fichero = null;
 		PrintWriter pw = null;
 		try {
