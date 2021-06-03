@@ -155,7 +155,6 @@ public class PantallaAlta extends JDialog {
 								JOptionPane.ERROR_MESSAGE);	
 					}
 					
-				
 					}});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);

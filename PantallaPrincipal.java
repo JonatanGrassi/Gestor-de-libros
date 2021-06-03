@@ -91,11 +91,17 @@ public class PantallaPrincipal extends JFrame {
 						consulta.setLocationRelativeTo(null);
 						break;
 
+						
+					case 2:
+						PantallaModificacion modificar = new PantallaModificacion(librosCreados,contador);
+						modificar.setModal(true);
+						modificar.setVisible(true);
+						modificar.setLocationRelativeTo(null);
+						
 					case 3:
-
-						PantallaBaja baja = new PantallaBaja(librosCreados, contador);
+						
+						PantallaBaja baja = new PantallaBaja(librosCreados,contador);
 						baja.setModal(true);
-						;
 						baja.setVisible(true);
 						baja.setLocationRelativeTo(null);
 						break;

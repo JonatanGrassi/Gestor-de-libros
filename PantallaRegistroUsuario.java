@@ -13,6 +13,7 @@ import javax.swing.JDialog;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
 
 public class PantallaRegistroUsuario extends JFrame {
 
