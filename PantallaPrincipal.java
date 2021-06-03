@@ -9,9 +9,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.JTextPane;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 
@@ -91,21 +94,29 @@ public class PantallaPrincipal extends JFrame {
 						consulta.setLocationRelativeTo(null);
 						break;
 
-						
 					case 2:
-						PantallaModificacion modificar = new PantallaModificacion(librosCreados,contador);
+						PantallaModificacion modificar = new PantallaModificacion(librosCreados, contador);
 						modificar.setModal(true);
 						modificar.setVisible(true);
 						modificar.setLocationRelativeTo(null);
-						
+						break;
 					case 3:
-						
-						PantallaBaja baja = new PantallaBaja(librosCreados,contador);
+
+						PantallaBaja baja = new PantallaBaja(librosCreados, contador);
 						baja.setModal(true);
 						baja.setVisible(true);
 						baja.setLocationRelativeTo(null);
 						break;
-
+					case 4:
+						if (librosCreados.size() == 0) {
+							JOptionPane.showMessageDialog(null, "No hay registros para ordenar", "Ordenar registros",
+									JOptionPane.INFORMATION_MESSAGE);
+						} else {
+							Collections.sort(librosCreados);
+							JOptionPane.showMessageDialog(null, "Registros ordenados con exito perrusqui",
+									"Ordenar registros", JOptionPane.INFORMATION_MESSAGE);
+						}
+						break;
 					case 5:
 
 						PantallaListar listar = new PantallaListar(librosCreados);

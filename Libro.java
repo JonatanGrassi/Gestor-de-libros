@@ -33,7 +33,7 @@ public class Libro implements Comparable<Libro> {
 //	}
 	
 	public String toString() {
-		return 	String.format("%20s	%90s	%30s	%20s	%20d	%20d\n", ISBN,titulo,autor,editorial,edicion,anno_de_publicacion);
+		return 	String.format("%-20s	%-90s	%-30s	%-20s	%-20d	%-20d\n", ISBN,titulo,autor,editorial,edicion,anno_de_publicacion);
 	}
 
 

@@ -27,7 +27,6 @@ public class PantallaListar extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel);
 		contentPanel.setLayout(null);
-//		listarLibros(librosCreados);
 		JList list = new JList(dlLibros);
 		list.setBounds(461, 11, 167, 48);
 		contentPanel.add(list);
@@ -65,14 +64,9 @@ public class PantallaListar extends JDialog {
 		}
 	}
 
-//	public void listarLibros(Vector<Libro> librosCreados) {
-//		for (Libro libro : librosCreados) {
-//			dlLibros.addElement(libro.toString());
-//		}
-//		
 		
 	public String listarLibros(Vector<Libro> librosCreados) {
-		String listaL = "";
+		String listaL = String.format("%-20s	%-90s	%-30s	%-30s	%-10s	%-30s\n", "ISBN","TITULO","AUTOR","EDITORIAL","EDICION","AÑO DE PUBLICACION");
 		for (Libro libro : librosCreados) {
 			listaL += libro.toString();
 		}
