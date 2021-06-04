@@ -17,6 +17,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
+import javax.swing.border.LineBorder;
+import java.awt.SystemColor;
+import java.awt.Font;
 
 public class PantallaPrincipal extends JFrame {
 
@@ -54,19 +57,20 @@ public class PantallaPrincipal extends JFrame {
 	 */
 	public PantallaPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 461, 310);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		agregarOpcionesLista();
 
-		JLabel lblNewLabel = new JLabel("\u00BFQue desea hacer?");
-		lblNewLabel.setBounds(54, 67, 102, 14);
+		JLabel lblNewLabel = new JLabel("Elija opcion y presione aceptar");
+		lblNewLabel.setBounds(42, 214, 224, 24);
 		contentPane.add(lblNewLabel);
 
 		JList list = new JList(dlAcciones);
-		list.setBounds(42, 92, 125, 143);
+		list.setBorder(new LineBorder(SystemColor.desktop, 1, true));
+		list.setBounds(42, 68, 155, 143);
 		contentPane.add(list);
 
 		JButton AceptarOptButton = new JButton("Aceptar");
@@ -138,8 +142,17 @@ public class PantallaPrincipal extends JFrame {
 				}
 			}
 		});
-		AceptarOptButton.setBounds(246, 144, 89, 23);
+		AceptarOptButton.setBounds(268, 188, 89, 23);
 		contentPane.add(AceptarOptButton);
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new LineBorder(SystemColor.activeCaption, 4, true));
+		panel.setBounds(42, 16, 382, 36);
+		contentPane.add(panel);
+		
+		JLabel lblAdministracion = new JLabel("ADMINISTRACION");
+		panel.add(lblAdministracion);
+		lblAdministracion.setFont(new Font("Perpetua Titling MT", Font.BOLD, 20));
 		list.addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -172,5 +185,4 @@ public class PantallaPrincipal extends JFrame {
 		dato = i < 0 ? null : vector.get(i);
 		return dato;
 	}
-
 }

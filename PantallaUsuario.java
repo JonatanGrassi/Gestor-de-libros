@@ -12,11 +12,13 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
+import javax.swing.border.LineBorder;
+import java.awt.SystemColor;
 
 public class PantallaUsuario extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField ConstraseniaTextField;
 	private JTextField NUsuarioTextField;
 
 	/////////
@@ -24,6 +26,7 @@ public class PantallaUsuario extends JFrame {
 	public static String rutaUsers = "Users.txt";
 	public static ManejadorArchivos Archivo = new ManejadorArchivos(ruta);
 	public static ManejadorArchivos ArchivoUsers = new ManejadorArchivos(rutaUsers);	
+	private JPasswordField ConstraseniaTextField;
 	////////
 	
 	/**
@@ -66,21 +69,16 @@ public class PantallaUsuario extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel NUsuario = new JLabel("Nombre de Usuario");
-		NUsuario.setBounds(55, 47, 91, 14);
+		NUsuario.setBounds(55, 47, 152, 14);
 		contentPane.add(NUsuario);
 		
-		JLabel Contrasenia = new JLabel("Constrasenia");
-		Contrasenia.setBounds(55, 119, 83, 14);
+		JLabel Contrasenia = new JLabel("Constrase\u00F1a");
+		Contrasenia.setBounds(55, 104, 102, 14);
 		contentPane.add(Contrasenia);
-		
-		ConstraseniaTextField = new JTextField();
-		ConstraseniaTextField.setBounds(210, 116, 119, 20);
-		contentPane.add(ConstraseniaTextField);
-		ConstraseniaTextField.setColumns(10);
 		
 		
 		NUsuarioTextField = new JTextField();
-		NUsuarioTextField.setBounds(210, 44, 119, 20);
+		NUsuarioTextField.setBounds(240, 44, 94, 23);
 		contentPane.add(NUsuarioTextField);
 		NUsuarioTextField.setColumns(10);
 		
@@ -91,7 +89,7 @@ public class PantallaUsuario extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<User> users = new ArrayList<>();
 				users = ArchivoUsers.leerUsers();
-				if(validarUsuario(users,NUsuarioTextField.getText(),ConstraseniaTextField.getText())) {
+				if(validarUsuario(users,NUsuarioTextField.getText(),ConstraseniaTextField.getPassword().toString())) {
 					PantallaPrincipal principal = new PantallaPrincipal();
 					principal.setVisible(true);
 					dispose();
@@ -111,11 +109,11 @@ public class PantallaUsuario extends JFrame {
 //				}
 			}
 		});
-		IngresarButton.setBounds(323, 151, 89, 23);
+		IngresarButton.setBounds(240, 151, 94, 23);
 		contentPane.add(IngresarButton);
 		
 		JLabel lblNewLabel = new JLabel("\u00BFSos Nuevo?");
-		lblNewLabel.setBounds(58, 184, 88, 14);
+		lblNewLabel.setBounds(78, 209, 119, 14);
 		contentPane.add(lblNewLabel);
 		
 		JButton RegistrarseButton = new JButton("Registrate");
@@ -126,8 +124,17 @@ public class PantallaUsuario extends JFrame {
 				dispose();
 			}
 		});
-		RegistrarseButton.setBounds(179, 227, 89, 23);
+		RegistrarseButton.setBounds(195, 205, 119, 23);
 		contentPane.add(RegistrarseButton);
+		
+		ConstraseniaTextField = new JPasswordField();
+		ConstraseniaTextField.setBounds(240, 98, 94, 26);
+		contentPane.add(ConstraseniaTextField);
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new LineBorder(SystemColor.activeCaption, 4, true));
+		panel.setBounds(15, 16, 397, 177);
+		contentPane.add(panel);
 	}
 	
 	private static boolean validarUsuario(ArrayList<User> users,String nUsm, String pssw) {

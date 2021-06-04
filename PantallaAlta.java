@@ -16,6 +16,9 @@ import java.awt.event.ActionListener;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.JFormattedTextField;
+import javax.swing.border.LineBorder;
+import java.awt.SystemColor;
+import java.awt.Color;
 
 public class PantallaAlta extends JDialog {
 
@@ -42,83 +45,94 @@ public class PantallaAlta extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
-			JLabel isbnLabel = new JLabel("ISBN");
-			isbnLabel.setBounds(92, 73, 46, 14);
+			JLabel isbnLabel = new JLabel("ISBN:");
+			isbnLabel.setBounds(15, 73, 46, 14);
 			contentPanel.add(isbnLabel);
 		}
 		{
-			JLabel publiLabel = new JLabel("A\u00F1o de Publicacion");
-			publiLabel.setBounds(422, 182, 94, 14);
+			JLabel publiLabel = new JLabel("A\u00D1O DE PUBLICACION:");
+			publiLabel.setBounds(313, 182, 187, 14);
 			contentPanel.add(publiLabel);
 		}
 		{
-			JLabel tituloLabel = new JLabel("Titulo");
-			tituloLabel.setBounds(92, 121, 46, 14);
+			JLabel tituloLabel = new JLabel("TITULO:");
+			tituloLabel.setBounds(15, 121, 94, 14);
 			contentPanel.add(tituloLabel);
 		}
 		{
-			JLabel autorLabel = new JLabel("Autor");
-			autorLabel.setBounds(390, 121, 46, 14);
+			JLabel autorLabel = new JLabel("AUTOR:");
+			autorLabel.setBounds(313, 73, 94, 14);
 			contentPanel.add(autorLabel);
 		}
 		{
-			JLabel editorialLabel = new JLabel("Editorial");
-			editorialLabel.setBounds(92, 182, 46, 14);
+			JLabel editorialLabel = new JLabel("EDITORIAL:");
+			editorialLabel.setBounds(15, 182, 94, 14);
 			contentPanel.add(editorialLabel);
 		}
 		{
-			JLabel edicionLabel = new JLabel("Edicion");
-			edicionLabel.setBounds(257, 182, 46, 14);
+			JLabel edicionLabel = new JLabel("EDICION:");
+			edicionLabel.setBounds(313, 121, 86, 14);
 			contentPanel.add(edicionLabel);
 		}
 		{
 			isbnTextField = new JTextField();
-			isbnTextField.setBounds(179, 70, 86, 20);
+			isbnTextField.setBounds(107, 70, 146, 20);
 			contentPanel.add(isbnTextField);
 			isbnTextField.setColumns(10);
 		}
 		{
 			tituloTextField = new JTextField();
-			tituloTextField.setBounds(179, 118, 176, 20);
+			tituloTextField.setBounds(106, 118, 146, 20);
 			contentPanel.add(tituloTextField);
 			tituloTextField.setColumns(10);
 		}
 		{
 			autorTextField = new JTextField();
-			autorTextField.setBounds(468, 118, 135, 20);
+			autorTextField.setBounds(418, 70, 146, 20);
 			contentPanel.add(autorTextField);
 			autorTextField.setColumns(10);
 		}
 		{
 			editorialTextField = new JTextField();
-			editorialTextField.setBounds(152, 179, 82, 20);
+			editorialTextField.setBounds(106, 179, 146, 20);
 			contentPanel.add(editorialTextField);
 			editorialTextField.setColumns(10);
 		}
 		{
 			edicionTextField = new JTextField();
 			edicionTextField.setColumns(10);
-			edicionTextField.setBounds(313, 179, 86, 20);
+			edicionTextField.setBounds(418, 118, 146, 20);
 			contentPanel.add(edicionTextField);
 		}
 		{
 			anioPublicTextField = new JTextField();
 			anioPublicTextField.setColumns(10);
-			anioPublicTextField.setBounds(547, 179, 55, 20);
+			anioPublicTextField.setBounds(492, 179, 72, 20);
 			contentPanel.add(anioPublicTextField);
 		}
 		{
-			JLabel lblNewLabel_6 = new JLabel("REGISTRAR LIBRO");
-			lblNewLabel_6.setFont(new Font("Tahoma", Font.BOLD, 15));
-			lblNewLabel_6.setBounds(287, 11, 149, 30);
-			contentPanel.add(lblNewLabel_6);
+			JPanel panel = new JPanel();
+			panel.setBorder(new LineBorder(SystemColor.activeCaption, 4, true));
+			panel.setBounds(118, 16, 382, 36);
+			contentPanel.add(panel);
+			{
+				JLabel lblRegistrarLibro = new JLabel("REGISTRO DE LIBRO");
+				lblRegistrarLibro.setFont(new Font("Perpetua Titling MT", Font.BOLD, 20));
+				panel.add(lblRegistrarLibro);
+			}
+		}
+		{
+			JPanel panel = new JPanel();
+			panel.setBorder(new LineBorder(SystemColor.activeCaption, 2, true));
+			panel.setBounds(0, 59, 634, 158);
+			contentPanel.add(panel);
 		}
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
+				JButton okButton = new JButton("Registrar");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 					Libro libroReg =  new Libro();
