@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.util.Vector;
+import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 import javax.swing.JFormattedTextField;
 import javax.swing.border.LineBorder;
@@ -29,16 +30,13 @@ public class PantallaAlta extends JDialog {
 	private JTextField editorialTextField;
 	private JTextField edicionTextField;
 	private JTextField anioPublicTextField;
-	
-	
-	Libro libro = new Libro(), dato = null;
 
-	
+	Libro libro = new Libro(), dato = null;
 
 	/**
 	 * Create the dialog.
 	 */
-	public PantallaAlta( Vector<Libro> librosCreados,int[] contador) {
+	public PantallaAlta(Vector<Libro> librosCreados, int[] contador) {
 		setBounds(100, 100, 656, 312);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -135,41 +133,42 @@ public class PantallaAlta extends JDialog {
 				JButton okButton = new JButton("Registrar");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-					Libro libroReg =  new Libro();
-					
-					Libro libroNew = libroReg.validarISBN(contador,librosCreados,isbnTextField.getText());
-					if( libroNew == null) {	
-					
-				
-						libroReg.setAutor(autorTextField.getText());
-						libroReg.setEditorial(editorialTextField.getText());
-						libroReg.setTitulo(tituloTextField.getText());
+						Libro libroReg = new Libro();
+						String isbn = isbnTextField.getText();
 						
-						if(leer_entero(anioPublicTextField.getText(),0)>0) {
-							libroReg.setAnno_de_publicacion(Integer.parseInt(anioPublicTextField.getText()));//tirar interrupcion
-							
-							if(leer_entero(edicionTextField.getText(),1)>0){
-								libroReg.setEdicion(Integer.parseInt(edicionTextField.getText()));//tirar interrupcion
-								librosCreados.add(libroReg);
-								dispose();
+						if (!isbn.equals("") && Pattern.matches("[0-9]{3}-[0-9]{1,5}-[0-9]{1,7}-[0-9]{1,6}-[0-9]{1,3}",isbn) && isbn.length() <= 17) {
+							Libro libroNew = libroReg.validarISBN(contador, librosCreados, isbn);
+							if (libroNew == null) {
+
+								String autor = autorTextField.getText();
+								String Editorial = editorialTextField.getText();
+								String titulo = tituloTextField.getText();
+
+								if (!autor.equals("") && autor.length()>= 1 && autor.length() <=300 && !Editorial.equals("") && !titulo.equals("")) {
+
+									libroReg.setAutor(autor);
+									libroReg.setEditorial(Editorial);
+									libroReg.setTitulo(titulo);
+									
+									validacionesAnioyEdicion(libroReg, librosCreados);
+								}
+
+							} else {
+								JOptionPane.showMessageDialog(null,
+										"ISBN: " + libroReg.getISBN() + "\n" + "Título: " + libroReg.getTitulo() + "\n"
+												+ "Autor: " + libroReg.getAutor() + "\n" + "Edición: "
+												+ libroReg.getEdicion() + "\n" + "Editorial: " + libroReg.getEditorial()
+												+ "\n" + "Año de publicación: " + libroReg.getAnno_de_publicacion()
+												+ "\n",
+										"El libro que quiere registrar ya existe", JOptionPane.ERROR_MESSAGE);
 							}
-							
+						} else {
+							JOptionPane.showMessageDialog(null, "ISBN: " + isbn + " incorrecto \n El formato correcto es: "
+									+ "xxx[3]-xx[1a5]-xxxxx[1a7]-xx[1a6]-x[1a3]", "DEBE INGRESAR UN ISBN",
+									JOptionPane.ERROR_MESSAGE);
 						}
-				
-					}else
-					{
-						JOptionPane.showMessageDialog(null,
-												"ISBN: " + libroReg.getISBN() +"\n"+
-												"Título: " + libroReg.getTitulo() +"\n"+
-												"Autor: " + libroReg.getAutor() +"\n"+
-												"Edición: " + libroReg.getEdicion() +"\n"+
-												"Editorial: " + libroReg.getEditorial() +"\n"+
-												"Año de publicación: " + libroReg.getAnno_de_publicacion()+"\n"
-								,"El libro que quiere registrar ya existe",
-								JOptionPane.ERROR_MESSAGE);	
 					}
-					
-					}});
+				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
@@ -177,24 +176,37 @@ public class PantallaAlta extends JDialog {
 		}
 	}
 	
+	public void validacionesAnioyEdicion(Libro libroReg,Vector<Libro> librosCreados)
+	{
+		if (leer_entero(anioPublicTextField.getText(), 0) > 0) {
+			libroReg.setAnno_de_publicacion(
+					Integer.parseInt(anioPublicTextField.getText()));// tirar
+																		// interrupcion
 
-	public static int leer_entero(String mensaje,int identificacor) {
+			if (leer_entero(edicionTextField.getText(), 1) > 0) {
+				libroReg.setEdicion(Integer.parseInt(edicionTextField.getText()));// tirar
+																					// interrupcion
+				librosCreados.add(libroReg);
+				dispose();
+			}
+
+		}
+	}
+
+	public static int leer_entero(String mensaje, int identificacor) {
 		try {
 			return Integer.parseInt(mensaje);
 		} catch (NumberFormatException e) {
-			if( identificacor == 0) {
-				JOptionPane.showMessageDialog(null,
-						"El año de publicación debe ser un número entero positivo","Error al Registar",JOptionPane.ERROR_MESSAGE);
-			}else
-			{
-				JOptionPane.showMessageDialog(null,
-						"El numero de edicion debe ser un número entero positivo","Error al Registar",JOptionPane.ERROR_MESSAGE);
+			if (identificacor == 0) {
+				JOptionPane.showMessageDialog(null, "El año de publicación debe ser un número entero positivo",
+						"Error al Registar", JOptionPane.ERROR_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(null, "El numero de edicion debe ser un número entero positivo",
+						"Error al Registar", JOptionPane.ERROR_MESSAGE);
 			}
-		
+
 			return -1;
 		}
 	}
-	
+
 }
-
-
