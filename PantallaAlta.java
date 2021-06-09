@@ -132,28 +132,55 @@ public class PantallaAlta extends JDialog {
 			{
 				JButton okButton = new JButton("Registrar");
 				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
+					public void actionPerformed(ActionEvent arg0) 
+					{
 						Libro libroReg = new Libro();
 						String isbn = isbnTextField.getText();
 						
-						if (!isbn.equals("") && Pattern.matches("[0-9]{3}-[0-9]{1,5}-[0-9]{1,7}-[0-9]{1,6}-[0-9]{1,3}",isbn) && isbn.length() <= 17) {
+						//validacion de ISBN
+						if (Pattern.matches("[0-9]{3}-[0-9]{1,5}-[0-9]{1,7}-[0-9]{1,6}-[0-9]{1,3}", isbn)
+								&& isbn.length() <= 17) 
+						{
 							Libro libroNew = libroReg.validarISBN(contador, librosCreados, isbn);
-							if (libroNew == null) {
-
+							if (libroNew == null) 
+							{
+								//obtengo los valores de los campos a validar
 								String autor = autorTextField.getText();
 								String Editorial = editorialTextField.getText();
 								String titulo = tituloTextField.getText();
 
-								if (!autor.equals("") && autor.length()>= 1 && autor.length() <=300 && !Editorial.equals("") && !titulo.equals("")) {
+								if (!autor.equals("") && !Editorial.equals("") && !titulo.equals("")) 
+								{
+									//validacion de longitud de autor
+									if (autor.length() <= 300) 
+									{
 
-									libroReg.setAutor(autor);
-									libroReg.setEditorial(Editorial);
-									libroReg.setTitulo(titulo);
-									
-									validacionesAnioyEdicion(libroReg, librosCreados);
+										libroReg.setAutor(autor);
+										libroReg.setEditorial(Editorial);
+										libroReg.setTitulo(titulo);
+										validacionesAnioyEdicion(libroReg, librosCreados);
+
+									} 
+									else 
+									{
+										//Error de longitud de nombre autor
+										JOptionPane.showMessageDialog(null,
+												"El autor debe contener entre 1 y 300 caracateres",
+												"Formato incorrecto de autor", JOptionPane.ERROR_MESSAGE);
+									}
+
+								} 
+								else 
+								{	
+									//Error campos vacios del registro
+									JOptionPane.showMessageDialog(null, "No puede haber campos vacios en el registro",
+											"Debe llenar todos los campos", JOptionPane.ERROR_MESSAGE);
 								}
 
-							} else {
+							} 
+							else 
+							{	
+								//Error Registro de libro ya existente
 								JOptionPane.showMessageDialog(null,
 										"ISBN: " + libroReg.getISBN() + "\n" + "Título: " + libroReg.getTitulo() + "\n"
 												+ "Autor: " + libroReg.getAutor() + "\n" + "Edición: "
@@ -162,10 +189,14 @@ public class PantallaAlta extends JDialog {
 												+ "\n",
 										"El libro que quiere registrar ya existe", JOptionPane.ERROR_MESSAGE);
 							}
-						} else {
-							JOptionPane.showMessageDialog(null, "ISBN: " + isbn + " incorrecto \n El formato correcto es: "
-									+ "xxx[3]-xx[1a5]-xxxxx[1a7]-xx[1a6]-x[1a3]", "DEBE INGRESAR UN ISBN",
-									JOptionPane.ERROR_MESSAGE);
+						} 
+						else 
+						{	
+							//Error ISBN De libro
+							JOptionPane.showMessageDialog(null,
+									"ISBN: " + isbn + " incorrecto \n El formato correcto es: "
+											+ "xxx[3]-xx[1a5]-xxxxx[1a7]-xx[1a6]-x[1a3]",
+									"DEBE INGRESAR UN ISBN", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 				});
@@ -175,13 +206,11 @@ public class PantallaAlta extends JDialog {
 			}
 		}
 	}
-	
-	public void validacionesAnioyEdicion(Libro libroReg,Vector<Libro> librosCreados)
-	{
+
+	public void validacionesAnioyEdicion(Libro libroReg, Vector<Libro> librosCreados) {
 		if (leer_entero(anioPublicTextField.getText(), 0) > 0) {
-			libroReg.setAnno_de_publicacion(
-					Integer.parseInt(anioPublicTextField.getText()));// tirar
-																		// interrupcion
+			libroReg.setAnno_de_publicacion(Integer.parseInt(anioPublicTextField.getText()));// tirar
+																								// interrupcion
 
 			if (leer_entero(edicionTextField.getText(), 1) > 0) {
 				libroReg.setEdicion(Integer.parseInt(edicionTextField.getText()));// tirar

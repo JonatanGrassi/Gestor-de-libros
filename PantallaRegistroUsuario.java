@@ -88,14 +88,14 @@ public class PantallaRegistroUsuario extends JFrame {
 						ManejadorArchivos userFile = new ManejadorArchivos("Users.txt");
 						ArrayList<User> UsExistentes = userFile.leerUsers();
 						
-						if(NomUsTextField.getText().equals("") ||  PsswTextField2.getPassword().toString().equals("")) {
+						if(NomUsTextField.getText().equals("") ||  String.valueOf(PsswTextField2.getPassword()).equals("")) {
 							JOptionPane.showMessageDialog(PantallaRegistroUsuario.this,
 									"Debe ingresar un nombre y contraseña","Campo/s vacios",JOptionPane.ERROR_MESSAGE);
-						}else if (UsExistentes.contains(new User(PsswTextField2.getPassword().toString(),NomUsTextField.getText()))) {
+						}else if (UsExistentes.contains(new User(String.valueOf(PsswTextField2.getPassword()),NomUsTextField.getText()))) {
 							JOptionPane.showMessageDialog(PantallaRegistroUsuario.this,
 									"El usuario ya existe, ingrese otro nombre","Error al Registar",JOptionPane.ERROR_MESSAGE);
 						} else {
-							userFile.registrarUsuarios(NomUsTextField.getText(), PsswTextField2.getPassword().toString());
+							userFile.registrarUsuarios(NomUsTextField.getText(), String.valueOf(PsswTextField2.getPassword()));
 							JOptionPane.showMessageDialog(PantallaRegistroUsuario.this, "Se ha Registrado con exito");
 							PantallaUsuario usuario = new PantallaUsuario();
 							usuario.setVisible(true);

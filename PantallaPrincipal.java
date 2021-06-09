@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.EventQueue;
 
 import javax.swing.DefaultListModel;
@@ -13,6 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Vector;
@@ -43,7 +46,6 @@ public class PantallaPrincipal extends JFrame {
 
 					PantallaPrincipal frame = new PantallaPrincipal();
 
-					librosCreados = archivo.leerArchivoLibros();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -73,6 +75,7 @@ public class PantallaPrincipal extends JFrame {
 		list.setBounds(42, 68, 155, 143);
 		contentPane.add(list);
 
+		librosCreados = archivo.leerArchivoLibros();
 		JButton AceptarOptButton = new JButton("Aceptar");
 		AceptarOptButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -83,7 +86,6 @@ public class PantallaPrincipal extends JFrame {
 
 						PantallaAlta alta = new PantallaAlta(librosCreados, contador);
 						alta.setModal(true);
-						;
 						alta.setVisible(true);
 						alta.setLocationRelativeTo(null);
 
@@ -93,7 +95,6 @@ public class PantallaPrincipal extends JFrame {
 
 						PantallaConsultar consulta = new PantallaConsultar(librosCreados, contador);
 						consulta.setModal(true);
-						;
 						consulta.setVisible(true);
 						consulta.setLocationRelativeTo(null);
 						break;
@@ -117,7 +118,7 @@ public class PantallaPrincipal extends JFrame {
 									JOptionPane.INFORMATION_MESSAGE);
 						} else {
 							Collections.sort(librosCreados);
-							JOptionPane.showMessageDialog(null, "Registros ordenados con exito perrusqui",
+							JOptionPane.showMessageDialog(null, "Registros ordenados con exito",
 									"Ordenar registros", JOptionPane.INFORMATION_MESSAGE);
 						}
 						break;
@@ -144,15 +145,24 @@ public class PantallaPrincipal extends JFrame {
 		});
 		AceptarOptButton.setBounds(268, 188, 89, 23);
 		contentPane.add(AceptarOptButton);
-		
+
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(SystemColor.activeCaption, 4, true));
 		panel.setBounds(42, 16, 382, 36);
 		contentPane.add(panel);
-		
+
 		JLabel lblAdministracion = new JLabel("ADMINISTRACION");
 		panel.add(lblAdministracion);
 		lblAdministracion.setFont(new Font("Perpetua Titling MT", Font.BOLD, 20));
+		
+		JButton btnNewButton = new JButton("ayuda");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				abrirAyuda("Ayuda\\ayuda.txt");
+			}
+		});
+		btnNewButton.setBounds(335, 68, 89, 27);
+		contentPane.add(btnNewButton);
 		list.addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -165,6 +175,22 @@ public class PantallaPrincipal extends JFrame {
 		});
 
 	}
+
+	public void abrirAyuda(String archivo) {
+		try {
+
+			File objetofile = new File(archivo);
+			Desktop.getDesktop().open(objetofile);
+
+		} catch (IOException ex) {
+
+			System.out.println(ex);
+
+		}
+
+	}
+
+	
 
 	public void agregarOpcionesLista() {
 

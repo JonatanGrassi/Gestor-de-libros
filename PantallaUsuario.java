@@ -88,9 +88,12 @@ public class PantallaUsuario extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<User> users = new ArrayList<>();
 				users = ArchivoUsers.leerUsers();
+				char [] password = ConstraseniaTextField.getPassword();
 				if (validarUsuario(users, NUsuarioTextField.getText(),
-						ConstraseniaTextField.getPassword().toString())) {
+						String.valueOf(ConstraseniaTextField.getPassword()))) {
+			      
 					PantallaPrincipal principal = new PantallaPrincipal();
+					
 					principal.setVisible(true);
 					dispose();
 				} else {
