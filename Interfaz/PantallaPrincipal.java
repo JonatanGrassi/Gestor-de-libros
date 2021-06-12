@@ -1,3 +1,6 @@
+package Interfaz;
+import Codigo.Libro;
+import Codigo.ManejadorArchivos;
 import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.EventQueue;

@@ -1,3 +1,5 @@
+package Interfaz;
+import Codigo.Libro;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.util.Vector;

@@ -1,3 +1,5 @@
+package Interfaz;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
@@ -18,6 +20,9 @@ import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 import javax.swing.JFormattedTextField;
 import javax.swing.border.LineBorder;
+
+import Codigo.Libro;
+
 import java.awt.SystemColor;
 import java.awt.Color;
 
