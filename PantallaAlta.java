@@ -182,10 +182,10 @@ public class PantallaAlta extends JDialog {
 							{	
 								//Error Registro de libro ya existente
 								JOptionPane.showMessageDialog(null,
-										"ISBN: " + libroReg.getISBN() + "\n" + "Título: " + libroReg.getTitulo() + "\n"
-												+ "Autor: " + libroReg.getAutor() + "\n" + "Edición: "
-												+ libroReg.getEdicion() + "\n" + "Editorial: " + libroReg.getEditorial()
-												+ "\n" + "Año de publicación: " + libroReg.getAnno_de_publicacion()
+										"ISBN: " + libroNew.getISBN() + "\n" + "Título: " + libroNew.getTitulo() + "\n"
+												+ "Autor: " + libroNew.getAutor() + "\n" + "Edición: "
+												+ libroNew.getEdicion() + "\n" + "Editorial: " + libroNew.getEditorial()
+												+ "\n" + "Año de publicación: " + libroNew.getAnno_de_publicacion()
 												+ "\n",
 										"El libro que quiere registrar ya existe", JOptionPane.ERROR_MESSAGE);
 							}
@@ -223,11 +223,18 @@ public class PantallaAlta extends JDialog {
 	}
 
 	public static int leer_entero(String mensaje, int identificacor) {
-		try {
-			return Integer.parseInt(mensaje);
+		try {//agregar validacion de 4 cifras
+			 int num =Integer.parseInt(mensaje);
+			
+			if(identificacor == 0 && mensaje.length() != 4 && num >= 1900) {
+				JOptionPane.showMessageDialog(null, "El año de publicación debe ser un número entero positivo de 4 cifras mayor o igual a 1900",//mayor a 1900
+						"Error al Registar", JOptionPane.ERROR_MESSAGE);
+			}
+			return num;
+			
 		} catch (NumberFormatException e) {
 			if (identificacor == 0) {
-				JOptionPane.showMessageDialog(null, "El año de publicación debe ser un número entero positivo",
+				JOptionPane.showMessageDialog(null, "El año de publicación debe ser un número entero positivo de 4 cifras",
 						"Error al Registar", JOptionPane.ERROR_MESSAGE);
 			} else {
 				JOptionPane.showMessageDialog(null, "El numero de edicion debe ser un número entero positivo",
