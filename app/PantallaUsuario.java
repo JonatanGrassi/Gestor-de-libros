@@ -1,3 +1,5 @@
+package app;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -14,6 +16,13 @@ import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 import javax.swing.border.LineBorder;
+
+import Codigo.Libro;
+import Codigo.ManejadorArchivos;
+import Codigo.User;
+import Interfaz.PantallaPrincipal;
+import Interfaz.PantallaRegistroUsuario;
+
 import java.awt.SystemColor;
 import javax.swing.ImageIcon;
 

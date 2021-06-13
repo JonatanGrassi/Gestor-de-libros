@@ -14,7 +14,8 @@ public class Main {
 	public static String rutaUsers = "Users.txt";
 	public static ManejadorArchivos Archivo = new ManejadorArchivos(ruta);
 	public static ManejadorArchivos ArchivoUsers = new ManejadorArchivos(rutaUsers);
-
+	
+	/*
 	public static void main(String[] args) {
 		Vector<Libro> vector = new Vector<>();
 		ArrayList<User> users = new ArrayList<>();
@@ -34,7 +35,7 @@ public class Main {
 		} while (opcion != 7);
 		Archivo.escribirEnArchivo(vector);
 	}
-
+	*/
 	private static void validarUsuario(ArrayList<User> users) {
 		boolean coicidencia = false;
 		do {
