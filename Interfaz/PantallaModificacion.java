@@ -1,8 +1,10 @@
 package Interfaz;
+
 import Codigo.Libro;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.util.Vector;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -57,26 +59,39 @@ public class PantallaModificacion extends JDialog {
 		contentPanel.add(lblNewLabel_1);
 
 		JButton btnNewButton = new JButton("Buscar");
+		btnNewButton.setToolTipText("buscar libro");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				libroNew = libroReg.validarISBN(contador, librosCreados, isbnTextField.getText());
-				if (libroNew == null) {
-					JOptionPane.showMessageDialog(null, "El registro que quiere actualizar no existe",
-							"Error al actualizar", JOptionPane.ERROR_MESSAGE);
-				} else {
-					autor.setEnabled(true);
-					edicion.setEnabled(true);
-					anioPublicacion.setEnabled(true);
-					titulo.setEnabled(true);
-					editorial.setEnabled(true);
-					
-					autor.setText(libroNew.getAutor());
-					edicion.setText(String.valueOf(libroNew.getEdicion()));
-					editorial.setText(String.valueOf(libroNew.getEditorial()));
-					titulo.setText(String.valueOf(libroNew.getTitulo()));
-					anioPublicacion.setText(String.valueOf(libroNew.getAnno_de_publicacion()));
-					
 
+				String isbn = isbnTextField.getText();
+				libroNew = libroReg.validarISBN(contador, librosCreados, isbn);
+
+				// validacion de ISBN
+				if (Pattern.matches("[0-9]{3}-[0-9]{1,5}-[0-9]{1,7}-[0-9]{1,6}-[0-9]{1,3}", isbn)
+						&& isbn.length() <= 17) {
+					if (libroNew == null) {
+						JOptionPane.showMessageDialog(null, "El registro que quiere actualizar no existe",
+								"Error al actualizar", JOptionPane.ERROR_MESSAGE);
+					} else {
+						autor.setEnabled(true);
+						edicion.setEnabled(true);
+						anioPublicacion.setEnabled(true);
+						titulo.setEnabled(true);
+						editorial.setEnabled(true);
+						
+						autor.setText(libroNew.getAutor());
+						edicion.setText(String.valueOf(libroNew.getEdicion()));
+						editorial.setText(String.valueOf(libroNew.getEditorial()));
+						titulo.setText(String.valueOf(libroNew.getTitulo()));
+						anioPublicacion.setText(String.valueOf(libroNew.getAnno_de_publicacion()));
+
+					}
+				} else {
+					// Error ISBN De libro
+					JOptionPane.showMessageDialog(null,
+							"ISBN: " + isbn + " incorrecto \n El formato correcto es: "
+									+ "xxx[3]-xx[1a5]-xxxxx[1a7]-xx[1a6]-x[1a3]",
+							"DEBE INGRESAR UN ISBN", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -150,21 +165,42 @@ public class PantallaModificacion extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("OK");
+				okButton.setToolTipText("Confirme la modificacion");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						
-						libroNew.setAutor(autor.getText());
-						libroNew.setEditorial(editorial.getText());
-						libroNew.setTitulo(titulo.getText());
+						String autorString = autor.getText();
+						String EditorialString = editorial.getText();
+						String tituloString = titulo.getText();
 						
-						if(leer_entero(anioPublicacion.getText(),0)>0) {
-							libroNew.setAnno_de_publicacion(Integer.parseInt(anioPublicacion.getText()));//tirar interrupcion
-							
-							if(leer_entero(edicion.getText(),1)>0){
-								libroNew.setEdicion(Integer.parseInt(edicion.getText()));//tirar interrupcion
-								dispose();
+						
+
+						if (!autorString.equals("") && !EditorialString.equals("") && !tituloString.equals("")) 
+						{
+							//validacion de longitud de autor
+							if (autorString.length() <= 300) 
+							{
+
+								libroNew.setAutor(autorString);
+								libroNew.setEditorial(EditorialString);
+								libroNew.setTitulo(tituloString);
+								validacionesAnioyEdicion(libroNew, librosCreados);
+
+							} 
+							else 
+							{
+								//Error de longitud de nombre autor
+								JOptionPane.showMessageDialog(null,
+										"El autor debe contener entre 1 y 300 caracateres",
+										"Formato incorrecto de autor", JOptionPane.ERROR_MESSAGE);
 							}
-							
+
+						} 
+						else 
+						{	
+							//Error campos vacios del registro
+							JOptionPane.showMessageDialog(null, "No puede haber campos vacios en el registro",
+									"Debe llenar todos los campos", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 				});
@@ -174,20 +210,45 @@ public class PantallaModificacion extends JDialog {
 			}
 		}
 	}
-	
-	public static int leer_entero(String mensaje,int identificacor) {
-		try {
-			return Integer.parseInt(mensaje);
-		} catch (NumberFormatException e) {
-			if( identificacor == 0) {
-				JOptionPane.showMessageDialog(null,
-						"El año de publicación debe ser un número entero positivo","Error al Registar",JOptionPane.ERROR_MESSAGE);
-			}else
-			{
-				JOptionPane.showMessageDialog(null,
-						"El numero de edicion debe ser un número entero positivo","Error al Registar",JOptionPane.ERROR_MESSAGE);
+
+	public void validacionesAnioyEdicion(Libro libroReg, Vector<Libro> librosCreados) {
+		if (leer_entero(anioPublicacion.getText(), 0) > 0) {
+			libroReg.setAnno_de_publicacion(Integer.parseInt(anioPublicacion.getText()));// tirar
+																							// interrupcion
+
+			if (leer_entero(edicion.getText(), 1) > 0) {
+				libroReg.setEdicion(Integer.parseInt(edicion.getText()));// tirar
+																			// interrupcion
+				//librosCreados.add(libroReg);
+				dispose();
 			}
-		
+
+		}
+	}
+
+	public static int leer_entero(String mensaje, int identificacor) {
+		try {// agregar validacion de 4 cifras
+			int num = Integer.parseInt(mensaje);
+
+			if (identificacor == 0 && mensaje.length() != 4 && num >= 1900) {
+				JOptionPane.showMessageDialog(null,
+						"El año de publicación debe ser un número entero positivo de 4 cifras mayor o igual a 1900", // mayor
+																														// a
+																														// 1900
+						"Error al Registar", JOptionPane.ERROR_MESSAGE);
+			}
+			return num;
+
+		} catch (NumberFormatException e) {
+			if (identificacor == 0) {
+				JOptionPane.showMessageDialog(null,
+						"El año de publicación debe ser un número entero positivo de 4 cifras", "Error al Registar",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(null, "El numero de edicion debe ser un número entero positivo",
+						"Error al Registar", JOptionPane.ERROR_MESSAGE);
+			}
+
 			return -1;
 		}
 	}

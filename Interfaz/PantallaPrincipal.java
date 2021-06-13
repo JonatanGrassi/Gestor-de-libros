@@ -39,27 +39,6 @@ public class PantallaPrincipal extends JFrame {
 	// private static String rutaLibros = "libros.tsv";
 	int[] contador = { 0 };
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-
-					PantallaPrincipal frame = new PantallaPrincipal();
-
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public PantallaPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 461, 310);
@@ -74,6 +53,7 @@ public class PantallaPrincipal extends JFrame {
 		contentPane.add(lblNewLabel);
 
 		JList list = new JList(dlAcciones);
+		list.setToolTipText("Elija una opcion");
 		list.setBorder(new LineBorder(SystemColor.desktop, 1, true));
 		list.setBounds(42, 68, 155, 143);
 		contentPane.add(list);
@@ -159,9 +139,10 @@ public class PantallaPrincipal extends JFrame {
 		lblAdministracion.setFont(new Font("Perpetua Titling MT", Font.BOLD, 20));
 		
 		JButton btnNewButton = new JButton("ayuda");
+		btnNewButton.setToolTipText("muestra el manual de usuario");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				abrirAyuda("Ayuda\\ayuda.txt");
+				abrirAyuda("Ayuda\\Manual Sistema Gestor de Libros McCabe.pdf");
 			}
 		});
 		btnNewButton.setBounds(335, 68, 89, 27);

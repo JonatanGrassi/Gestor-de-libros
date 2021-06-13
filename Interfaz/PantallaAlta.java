@@ -22,6 +22,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.border.LineBorder;
 
 import Codigo.Libro;
+import Codigo.ManejadorArchivos;
 
 import java.awt.SystemColor;
 import java.awt.Color;
@@ -35,12 +36,10 @@ public class PantallaAlta extends JDialog {
 	private JTextField editorialTextField;
 	private JTextField edicionTextField;
 	private JTextField anioPublicTextField;
+	private static ManejadorArchivos archivo = new ManejadorArchivos("libros.tsv");
 
 	Libro libro = new Libro(), dato = null;
 
-	/**
-	 * Create the dialog.
-	 */
 	public PantallaAlta(Vector<Libro> librosCreados, int[] contador) {
 		setBounds(100, 100, 656, 312);
 		getContentPane().setLayout(new BorderLayout());
@@ -133,6 +132,7 @@ public class PantallaAlta extends JDialog {
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Registrar");
@@ -149,11 +149,12 @@ public class PantallaAlta extends JDialog {
 							Libro libroNew = libroReg.validarISBN(contador, librosCreados, isbn);
 							if (libroNew == null) 
 							{
-								//obtengo los valores de los campos a validar
+								//obtengo nombre de autor
 								String autor = autorTextField.getText();
+								//obtengo editorial
 								String Editorial = editorialTextField.getText();
+								//obtengo editorial
 								String titulo = tituloTextField.getText();
-
 								if (!autor.equals("") && !Editorial.equals("") && !titulo.equals("")) 
 								{
 									//validacion de longitud de autor
@@ -161,10 +162,11 @@ public class PantallaAlta extends JDialog {
 									{
 
 										libroReg.setAutor(autor);
+										//completo nuevo libro con nombre del autor
 										libroReg.setEditorial(Editorial);
-										libroReg.setTitulo(titulo);
-										validacionesAnioyEdicion(libroReg, librosCreados);
-
+										//completo editorial en el nuevo libro
+										libroReg.setTitulo(titulo); 	//completo el titulo en el nuevo libro
+										validacionesAnioyEdicion(libroReg, librosCreados); //valido campos de numericos
 									} 
 									else 
 									{
@@ -205,6 +207,7 @@ public class PantallaAlta extends JDialog {
 						}
 					}
 				});
+				
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
@@ -221,6 +224,8 @@ public class PantallaAlta extends JDialog {
 				libroReg.setEdicion(Integer.parseInt(edicionTextField.getText()));// tirar
 																					// interrupcion
 				librosCreados.add(libroReg);
+				archivo.escribirEnArchivo(librosCreados);
+				
 				dispose();
 			}
 

@@ -7,11 +7,16 @@ import java.io.FileWriter;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Scanner;
 import java.util.Vector;
 
-public class ManejadorArchivos {
+import com.sun.xml.internal.fastinfoset.Decoder;
 
+public class ManejadorArchivos {
+	
+	private java.util.Base64.Encoder encoder = Base64.getEncoder();
+	private java.util.Base64.Decoder decoder = Base64.getUrlDecoder();
 	private String ruta;
 	Vector<Libro> vector = new Vector<Libro>();
 
@@ -53,7 +58,9 @@ public class ManejadorArchivos {
 			String[] campos;
 			while (entrada.hasNextLine()) {
 				campos = entrada.nextLine().split("\t");
-				User usuario = new User(campos[0], campos[1]);
+				byte[] nombreDecode = decoder.decode(campos[0]);
+				byte[] passDecode = decoder.decode(campos[1]);
+				User usuario = new User(new String(nombreDecode),new String(passDecode));
 				usuarios.add(usuario);
 			}
 		} catch (FileNotFoundException ex) {
@@ -95,9 +102,11 @@ public class ManejadorArchivos {
 		FileWriter fichero = null;
 		PrintWriter pw = null;
 		try {
+			String nombreCifrado = encoder.encodeToString(nombre.getBytes());
+			String psswCifrado = encoder.encodeToString(pssw.getBytes());
 			fichero = new FileWriter(ruta,true);
 			pw = new PrintWriter(fichero);			
-			pw.print(nombre + "\t" + pssw + "\n");
+			pw.print(nombreCifrado + "\t" + psswCifrado + "\n");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

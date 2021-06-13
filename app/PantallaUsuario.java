@@ -12,10 +12,13 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 import javax.swing.border.LineBorder;
+
+import com.sun.xml.internal.fastinfoset.Encoder;
 
 import Codigo.Libro;
 import Codigo.ManejadorArchivos;
@@ -48,6 +51,7 @@ public class PantallaUsuario extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+			
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -109,15 +113,6 @@ public class PantallaUsuario extends JFrame {
 					JOptionPane.showMessageDialog(PantallaUsuario.this, "Usuario no existente", "Error al Entrar",
 							JOptionPane.ERROR_MESSAGE);
 				}
-
-//				ManejadorArchivos usersFile = new ManejadorArchivos("Users.txt");
-//				ArrayList<User> usuariosReg= usersFile.leerUsers();
-//				User usuario = new User(NUsuarioTextField.getText(),ConstraseniaTextField.getText());
-//				if(usuariosReg.contains(usuario)) {
-//				PantallaPrincipal principal = new PantallaPrincipal();
-//				principal.setVisible(true);
-//				dispose();	
-//				}
 			}
 		});
 		IngresarButton.setBounds(240, 151, 94, 23);

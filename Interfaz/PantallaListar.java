@@ -96,6 +96,7 @@ public class PantallaListar extends JDialog {
 		table.setBounds(0, 0, 253, 107);
 		table.setRowSelectionAllowed(false);
 		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setToolTipText("mueva las columna para ver los campos");
 		scrollPane.setBounds(15, 55, 676, 130);
 
 		contentPanel.add(scrollPane);
